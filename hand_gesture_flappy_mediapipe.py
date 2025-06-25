@@ -23,11 +23,11 @@ YELLOW: Tuple[int, int, int] = (255, 255, 0)
 PIPE_COLOR: Tuple[int, int, int] = (34, 139, 34)
 
 # Game settings
-GRAVITY: float = 0.5
+GRAVITY: float = 0.6  # Slightly increased gravity
 BIRD_SIZE: int = 30
 PIPE_WIDTH: int = 80
 PIPE_GAP: int = 200
-PIPE_SPEED: int = 3
+PIPE_SPEED: int = 8  # 2x faster - increased from 4 to 8
 
 class MediaPipeHandTracker:
     def __init__(self):
@@ -152,7 +152,7 @@ class Bird:
             
             # Smooth movement
             diff = target_y - self.y
-            self.y += int(diff * 0.3)  # More responsive
+            self.y += int(diff * 0.5)  # Much more responsive for fast gameplay
             
             # Reduce velocity when hand is controlling
             self.velocity *= 0.3
@@ -224,7 +224,7 @@ class Pipe:
 class Game:
     def __init__(self):
         self.screen: pygame.Surface = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-        pygame.display.set_caption("Professional Hand Gesture Flappy Bird - MediaPipe")
+        pygame.display.set_caption("ULTRA FAST Hand Gesture Flappy Bird - 2x Speed!")
         self.clock: pygame.time.Clock = pygame.time.Clock()
         
         self.bird: Bird = Bird(100, SCREEN_HEIGHT // 2)
@@ -367,7 +367,7 @@ class Game:
                 self.bird.update(hand_y, self.current_confidence)
                 
                 self.pipe_timer += 1
-                if self.pipe_timer > 120:  # Every 2 seconds
+                if self.pipe_timer > 50:  # Every 0.83 seconds (2x faster spawn)
                     self.spawn_pipe()
                     self.pipe_timer = 0
                     
